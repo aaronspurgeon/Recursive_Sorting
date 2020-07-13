@@ -1,10 +1,26 @@
 # TO-DO: complete the helper function below to merge 2 sorted arrays
 def merge(arrA, arrB):
-    elements = len(arrA) + len(arrB)
-    merged_arr = [0] * elements
+    merged_arr = [None] * (len(arrA) + len(arrB))
+    k = i = j = 0
 
     # Your code here
     # presumably this is where we will code the < or > if statements to compare the actual values of the array and place them where they go
+    while i < len(arrA) and j < len(arrB):
+        if arrA[i] <= arrB[j]:
+            merged_arr[k] = arrA[i]
+            i += 1
+        else:
+            merged_arr[k] = arrB[j]
+            j += 1
+        k += 1
+    while i < len(arrA):
+        merged_arr[k] = arrA[i]
+        i += 1
+        k += 1
+    while j < len(arrB):
+        merged_arr[k] = arrB[j]
+        j += 1
+        k += 1
 
     return merged_arr
 
@@ -12,12 +28,40 @@ def merge(arrA, arrB):
 
 
 def merge_sort(arr):
-    if len(arr) == 1:
+
+    if len(arr) < 2:
         return arr
-    middle = len(arr) // 2
-    left = arr[:middle]
-    right = arr[middle:]
-    return merge(merge_sort(left), merge_sort(right))
+
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left = arr[:mid]
+        right = arr[mid:]
+
+        merge_sort(left)
+        merge_sort(right)
+
+        k = i = j = 0
+
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                arr[k] = left[i]
+                i += 1
+            else:
+                arr[k] = right[j]
+                j += 1
+            k += 1
+
+        while i < len(left):
+            arr[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            arr[k] = right[j]
+            j += 1
+            k += 1
+
+        return arr
 
 
 merge_sort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
